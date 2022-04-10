@@ -22,8 +22,16 @@ model User {
   updatedAt DateTime @updatedAt
 
   password   String
-  CreditCard CreditCard[]
-  Cart       Cart?
+  creditCard CreditCard[]
+  session Session[]
+  cart       Cart?
+}
+
+model Session {
+    id          String @id @default(cuid())
+    userId String
+    user User @relation(fields: [userId], references: [id])
+    createdAt DateTime @default(now())
 }
 
 model Address {
