@@ -1,13 +1,19 @@
+<script context="module">
+	// since there's no dynamic data here, we can prerender
+	// it so that it gets served as a static asset in prod
+	export const prerender = true;
+</script>
+
 <script lang="ts">
 	import AccountInfo from '$lib/AccountInfo.svelte';
 	import PaymentInfo from '$lib/PaymentInfo.svelte';
 	import PersonalInfo from '$lib/PersonalInfo.svelte';
-	import { onMount } from 'svelte';
+	import { accessToken } from '$lib/store';
+	import Header from '$lib/Header.svelte';
+	import { api } from '$lib/api';
 
 	const steps = ['accountInfo', 'personalInfo', 'paymentInfo'];
 	let currentStep = steps[0];
-
-	const registerEndpoint = import.meta.env.VITE_BACKEND + '/register';
 
 	const incrementStep = () => {
 		const index = steps.indexOf(currentStep);
@@ -23,10 +29,14 @@
 		}
 	};
 
+	const setAccessToken = (token: string) => {
+		accessToken.set(token);
+	};
+
 	const handleSubmit = async (e) => {
 		const formData = new FormData(e.target);
 		const json = Object.fromEntries(formData.entries());
-		const payload = {
+		const registerPayload = {
 			email: json.email,
 			password: json.password,
 			confirmPassword: json.password,
@@ -39,17 +49,43 @@
 			expiry_date: json.month + '/' + json.year
 		};
 
-		const result = await fetch(registerEndpoint, {
-			method: 'POST',
-			body: JSON.stringify(payload),
-			headers: {
-				'X-Requested-With': 'XMLHttpRequest'
-			}
-		});
+		console.log(registerPayload);
+
+		const result = await api('post', 'sign_up', registerPayload);
 
 		console.log(result);
+
+		if (result.status == 201) {
+			const registerResult = await result.json();
+			// window.location.href = '/login';
+			const loginPayload = {
+				email: json.email,
+				password: json.password
+			};
+
+			setAccessToken(registerResult.access_token);
+
+			const loginResult = await api('post', 'login', loginPayload);
+
+			console.log(loginResult);
+
+			if (loginResult.status === 200) {
+				const data = await loginResult.json();
+				localStorage.setItem('eshopping_access_token', data['access_token']);
+			}
+
+			console.info(
+				`POST /login\npayload: ${JSON.stringify(loginPayload)}\nStatus: ${result.status}`
+			);
+		} else {
+			console.info(
+				`POST /sign_up\npayload: ${JSON.stringify(registerPayload)}\nStatus: ${result.status}`
+			);
+		}
 	};
 </script>
+
+<Header title={'Registration'} />
 
 <form class="register" on:submit|preventDefault={handleSubmit} method="post">
 	<AccountInfo {incrementStep} show={currentStep === 'accountInfo'} />

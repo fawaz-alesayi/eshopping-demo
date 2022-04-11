@@ -8,7 +8,7 @@
 <div class="grid">
 	{#each products as product}
 		<div class="item">
-			<img src={product.imageUrl} alt="A random dog" height="200px" width="150px" />
+			<img src={product.imageUrl} alt="A product" height="200px" width="150px" />
 
 			<div class="middleInfo">
 				<div class="name">{product.name}</div>
@@ -41,11 +41,10 @@
 
 		display: flex;
 		flex-direction: row;
-		justify-content: space-between;
+		justify-content: center;
 		align-items: flex-start;
 		flex-wrap: wrap;
 		padding: 24px;
-		row-gap: 24px;
 
 		/* Colors / Grey Light 2 */
 
@@ -53,7 +52,7 @@
 		border-radius: 30px 30px 0px 0px;
 
 		width: 100%;
-		height: 100%;
+		min-height: 100vh;
 	}
 
 	.item {
@@ -61,7 +60,8 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		padding: 15px 10px;
+		padding: 15px 40px;
+		margin: 20px 20px;
 
 		/* Colors / White */
 
