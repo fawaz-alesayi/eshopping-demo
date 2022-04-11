@@ -1,6 +1,5 @@
 <script>
 	import Header from '$lib/Header.svelte';
-	import PaymentInfo from '$lib/PaymentInfo.svelte';
 	import { cartStore } from '$lib/cartStore';
 	import { onMount } from 'svelte';
 	import { api } from '$lib/api';
@@ -33,6 +32,7 @@
 
 		const checkoutPayload = {
 			email: userInfo.email,
+			cvv: json.cvv,
 			items: [...itemsToCheckout]
 		};
 
@@ -85,17 +85,6 @@
 
 	.vertical-text {
 		text-align: center;
-	}
-
-	.form-check {
-		margin-top: 5px;
-		margin-bottom: 5px;
-	}
-
-	.form-check-input {
-		margin-left: auto;
-		margin-right: auto;
-		background-color: #d1d3d1;
 	}
 
 	#cvv {

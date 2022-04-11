@@ -44,7 +44,8 @@
 			address: json.address,
 			card_number: json.creditCardNumber,
 			ccv: json.cvv,
-			expiry_date: json.month + '/' + json.year
+			expiry_date: json.month + '/' + json.year,
+			card_type: json.paymentMethod
 		};
 
 		const result = await api('post', 'sign_up', registerPayload);
