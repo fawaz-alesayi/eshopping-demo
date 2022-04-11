@@ -15,7 +15,7 @@
 <main class="content">
 	<h4>Order #{randomNumber} has been placed</h4>
 
-	<p>You may track your orders in the order tab</p>
+	<p>You can track your orders in the order tab</p>
 
 	<button class="button primary">Track Order</button>
 </main>
