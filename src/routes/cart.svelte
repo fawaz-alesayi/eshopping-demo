@@ -9,10 +9,15 @@
 		$cartStore.splice(index, 1);
 		$cartStore = $cartStore;
 	};
+
+	const deleteAllProducts = () => {
+		$cartStore = [];
+		$cartStore = $cartStore;
+	};
 </script>
 
 <Header title={'Cart'}>
-	<i>
+	<i on:click={deleteAllProducts}>
 		<Icon icon="fluent:delete-20-regular" height={24} width={24} />
 	</i>
 </Header>
@@ -35,7 +40,7 @@
 		<strong>Total: {$totalPrice} SR</strong>
 		<!--Checkout Button-->
 		<a href="/checkout">
-			<button class="button primary">Checkout</button>
+			<button class="button primary" disabled={$totalPrice < 1}>Checkout</button>
 		</a>
 	</footer>
 </div>

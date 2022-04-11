@@ -40,6 +40,7 @@
 
 		if (result.status === 200 || result.status === 201) {
 			const data = await result.json();
+			console.log(data);
 			if (window) {
 				window.location.href = '/tracking';
 			}
