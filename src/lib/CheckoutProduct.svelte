@@ -11,8 +11,9 @@
 		<p class="price">{product.price} SR</p>
 
 		<div class="actions">
-			<i
-				class="changeCount"
+			<img
+				src="/icons/remove.svg"
+				alt="Remove"
 				on:click={() => {
 					if (product.quantity > 1) {
 						product.quantity--;
@@ -20,20 +21,17 @@
 					product = product;
 					$cartStore = $cartStore;
 				}}
-			>
-				-
-			</i>
+			/>
 			{product.quantity}
-			<i
-				class="changeCount"
+			<img
+				src="/icons/add.svg"
+				alt="Add"
 				on:click={() => {
 					product.quantity++;
 					product = product;
 					$cartStore = $cartStore;
 				}}
-			>
-				+
-			</i>
+			/>
 		</div>
 	</div>
 </div>
@@ -70,6 +68,10 @@
 		align-items: center;
 		padding: 0px;
 		width: 100%;
+	}
+
+	.actions > img {
+		cursor: pointer;
 	}
 
 	.price {

@@ -2,8 +2,9 @@
 	import { create, test, enforce } from 'vest';
 	import SuitedInput from './SuitedInput.svelte';
 
-	export let decrementStep;
+	export let decrementStep = undefined;
 	export let show = true;
+	export let buttonName = 'Submit';
 	let month;
 	let year;
 	let touchedYear = false;
@@ -55,7 +56,41 @@
 	}
 </script>
 
-<div class:selected={!show}>
+<div class:selected={!show} class="paymentInfo">
+	<label for="paymentMethod">Credit Card Provider</label>
+	<div class="card-group">
+		<div class="form-check">
+			<input
+				class="form-check-input"
+				type="radio"
+				name="paymentMethod"
+				id="paymentMethod1"
+				value="mada"
+				checked
+			/>
+			<label class="form-check-label" for="paymentMethod1"> Mada </label>
+		</div>
+		<div class="form-check">
+			<input
+				class="form-check-input"
+				type="radio"
+				name="paymentMethod"
+				id="paymentMethod2"
+				value="visa"
+			/>
+			<label class="form-check-label" for="paymentMethod2"> Visa </label>
+		</div>
+		<div class="form-check">
+			<input
+				class="form-check-input"
+				type="radio"
+				name="paymentMethod"
+				id="paymentMethod3"
+				value="mastercard"
+			/>
+			<label class="form-check-label" for="paymentMethod3"> MasterCard </label>
+		</div>
+	</div>
 	<fieldset class="form-group">
 		<label for="creditCard">Credit Card Number</label>
 		<SuitedInput
@@ -70,16 +105,10 @@
 		<fieldset class="form-group">
 			<label for="expiryDate">Expiry Date</label>
 			<div class="inline-group">
+				<SuitedInput type="text" name={'month'} bind:value={month} placeholder="MM" maxLength={2} />
 				<SuitedInput
 					type="text"
-					name={"month"}
-					bind:value={month}
-					placeholder="MM"
-					maxLength={2}
-				/>
-				<SuitedInput
-					type="text"
-					name={"year"}
+					name={'year'}
 					bind:value={year}
 					placeholder="YY"
 					maxLength={2}
@@ -105,10 +134,13 @@
 			/>
 		</fieldset>
 	</div>
-	<button class="btn" disabled={suiteResult.hasErrors()} type="submit">Submit</button>
+	<button class="btn" disabled={suiteResult.hasErrors()} type="submit">{buttonName}</button>
 </div>
 
 <style>
+	.paymentInfo {
+		padding-left: 10px;
+	}
 	.selected {
 		display: none;
 	}

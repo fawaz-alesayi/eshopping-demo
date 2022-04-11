@@ -47,11 +47,7 @@
 			expiry_date: json.month + '/' + json.year
 		};
 
-		console.log(registerPayload);
-
 		const result = await api('post', 'sign_up', registerPayload);
-
-		console.log(result);
 
 		if (result.status == 201) {
 			const loginPayload = {
@@ -60,8 +56,6 @@
 			};
 
 			const loginResult = await api('post', 'login', loginPayload);
-
-			console.log(loginResult);
 
 			if (loginResult.status === 201 || loginResult.status === 200) {
 				const data = await loginResult.json();

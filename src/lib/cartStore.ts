@@ -6,7 +6,6 @@ import { derived, writable } from 'svelte/store';
 export const cartStore = writable(browser && JSON.parse(localStorage.getItem('eshopping-cart')));
 
 export const totalPrice = derived(cartStore, ($cartContents) => {
-	console.log('Derived totalPrice');
 	let price = 0;
 	$cartContents.forEach((e) => (price = price + e.price * e.quantity));
 	return price;

@@ -30,7 +30,6 @@
 	let searchTerm = '';
 
 	onMount(() => {
-		console.log($cartStore);
 		if (products.length > 0) {
 			cartStore.set([
 				{
@@ -52,7 +51,7 @@
 </svelte:head>
 
 <Header title="Products" allowBack={false}>
-	{#if $accessTokenStore}
+	{#if $accessTokenStore != null}
 		<a href="/cart">
 			<i>
 				<Icon icon="eva:shopping-cart-outline" height={24} width={24} />
@@ -81,6 +80,7 @@
 		background: #ffffff;
 		border: 1px solid #bababa;
 		border-radius: 10px;
+		max-width: 600px;
 	}
 
 	#textField {

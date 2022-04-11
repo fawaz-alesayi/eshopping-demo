@@ -1,14 +1,10 @@
 <script lang="ts">
 	import { cartStore, totalPrice } from '$lib/cartStore';
-
 	import CheckoutProduct from '$lib/CheckoutProduct.svelte';
 	import Header from '$lib/Header.svelte';
-	import type { CartItem, Product } from '$lib/types';
 	import Icon from '@iconify/svelte';
 
-	console.log($cartStore);
-
-	const handleClick = (product) => {
+	const deleteProduct = (product) => {
 		const index = $cartStore.indexOf(product);
 		$cartStore.splice(index, 1);
 		$cartStore = $cartStore;
@@ -26,15 +22,22 @@
 		<div class="product">
 			<CheckoutProduct {product} />
 			<i
+				class="delete"
 				on:click={() => {
-					handleClick(product);
+					deleteProduct(product);
 				}}
 			>
 				<Icon icon="fluent:delete-20-regular" height={24} width={24} />
 			</i>
 		</div>
 	{/each}
-	<strong>Total: {$totalPrice} SR</strong>
+	<footer class="footer">
+		<strong>Total: {$totalPrice} SR</strong>
+		<!--Checkout Button-->
+		<a href="/checkout">
+			<button class="button primary">Checkout</button>
+		</a>
+	</footer>
 </div>
 
 <style>
@@ -42,9 +45,12 @@
 		/* Auto layout */
 		display: flex;
 		flex-direction: column;
-		align-items: flex-start;
+		align-items: center;
+		justify-content: start;
 		padding: 20px;
 		row-gap: 20px;
+		height: 90vh;
+		margin: auto;
 	}
 
 	.product {
@@ -54,6 +60,20 @@
 		justify-content: space-between;
 		width: 100%;
 		max-width: 600px;
-		margin: auto;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.footer {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.footer > :global(*) {
+		display: block;
+	}
+
+	.delete {
+		cursor: pointer;
 	}
 </style>

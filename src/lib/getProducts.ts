@@ -11,7 +11,6 @@ export default async function getProducts(productEndpoint: string, query?: strin
 	}
 
 	const items = await result.json();
-	console.log(items);
 
 	const products = items
 		.map((item) => {

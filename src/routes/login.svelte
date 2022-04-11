@@ -40,7 +40,6 @@
 			password
 		};
 		suiteResult = suite(result);
-		console.log(suiteResult);
 	}
 </script>
 
