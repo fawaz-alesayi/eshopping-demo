@@ -47,11 +47,7 @@
 	};
 </script>
 
-<Header>
-	<i on:click={() => history.back()}>
-		<Icon icon="akar-icons:arrow-left" height={24} width={24} />
-	</i>
-	<h4>Shopping Cart</h4>
+<Header title={'Cart'}>
 	<i>
 		<Icon icon="fluent:delete-20-regular" height={24} width={24} />
 	</i>
