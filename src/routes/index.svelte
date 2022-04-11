@@ -9,8 +9,7 @@
 
 		return {
 			props: {
-				products,
-				uid: null
+				products
 			}
 		};
 	};
@@ -22,11 +21,25 @@
 	import type { Product } from '$lib/types';
 	import Header from '$lib/Header.svelte';
 	import getProducts from '$lib/getProducts';
+	import { accessToken } from '$lib/store';
+	import { cartStore } from '$lib/cartStore';
+	import { onMount } from 'svelte';
 
 	const productEndpoint = import.meta.env.VITE_BACKEND + '/search_items';
 	export let products: Product[];
-	export let uid;
 	let searchTerm = '';
+
+	onMount(() => {
+		console.log($cartStore);
+		if (products.length > 0) {
+			cartStore.set(([
+				{
+					...products[0],
+					quantity: 2,
+				}
+			]));
+		}
+	});
 
 	const searchProducts = async () => {
 		const result = await getProducts(productEndpoint, searchTerm);
@@ -39,7 +52,7 @@
 </svelte:head>
 
 <Header title="Products" allowBack={false}>
-	{#if uid}
+	{#if $accessToken}
 		<a href="/cart">
 			<i>
 				<Icon icon="eva:shopping-cart-outline" height={24} width={24} />

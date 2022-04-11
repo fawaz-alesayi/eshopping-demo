@@ -1,49 +1,17 @@
-<script context="module">
-	const products = [
-		{
-			imageUrl: 'https://picsum.photos/200/300',
-			name: 'Product 1',
-			price: '10.00',
-			reviewCount: 5,
-			rating: 4.5,
-			count: 1
-		},
-		{
-			imageUrl: 'https://picsum.photos/200/300',
-			name: 'Product 2',
-			price: '20.00',
-			reviewCount: 10,
-			rating: 4.0,
-			count: 2
-		}
-	];
-
-	/**
-	 * @type {import('@sveltejs/kit').Load}
-	 */
-	export const load = async ({}) => {
-		return {
-			props: {
-				products
-			}
-		};
-	};
-</script>
-
 <script lang="ts">
+	import { cartStore, totalPrice } from '$lib/cartStore';
+
 	import CheckoutProduct from '$lib/CheckoutProduct.svelte';
 	import Header from '$lib/Header.svelte';
-	import type { Product } from '$lib/types';
+	import type { CartItem, Product } from '$lib/types';
 	import Icon from '@iconify/svelte';
 
-	export let products: Product[] & {
-		count: number;
-	};
+	console.log($cartStore);
 
 	const handleClick = (product) => {
-		const index = products.indexOf(product);
-		products.splice(index, 1);
-		products = products;
+		const index = $cartStore.indexOf(product);
+		$cartStore.splice(index, 1);
+		$cartStore = $cartStore;
 	};
 </script>
 
@@ -54,7 +22,7 @@
 </Header>
 
 <div class="checkoutGrid">
-	{#each products as product (product)}
+	{#each $cartStore as product}
 		<div class="product">
 			<CheckoutProduct {product} />
 			<i
@@ -66,6 +34,7 @@
 			</i>
 		</div>
 	{/each}
+	<strong>Total: {$totalPrice} SR</strong>
 </div>
 
 <style>

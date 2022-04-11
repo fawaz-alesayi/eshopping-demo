@@ -11,7 +11,7 @@ export function api(
 		headers: {
 			'content-type': 'application/json',
 			'X-Requested-With': 'XMLHttpRequest',
-			authorization: accessToken ? `Bearer ${accessToken}` : undefined
+			'Authorization': accessToken ? `Bearer ${accessToken}` : undefined
 		},
 		body: data && JSON.stringify(data)
 	});

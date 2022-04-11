@@ -50,10 +50,6 @@
 			enforce(data.address).isNotBlank();
 		});
 
-		test('city', 'City must contain only letters', () => {
-			enforce(data.city).matches(/^[a-zA-Z]+$/);
-		});
-
 		test('country', 'Country must be one of the following above', () => {
 			enforce(data.country).inside(countries);
 		});

@@ -39,13 +39,14 @@
 		const registerPayload = {
 			email: json.email,
 			password: json.password,
-			confirmPassword: json.password,
+			confirmed_password: json.password,
 			fname: json.firstName,
 			lname: json.lastName,
 			country: json.country,
 			city: json.city,
 			address: json.address,
 			card_number: json.creditCardNumber,
+			ccv: json.cvv,
 			expiry_date: json.month + '/' + json.year
 		};
 
@@ -56,22 +57,18 @@
 		console.log(result);
 
 		if (result.status == 201) {
-			const registerResult = await result.json();
-			// window.location.href = '/login';
 			const loginPayload = {
 				email: json.email,
 				password: json.password
 			};
 
-			setAccessToken(registerResult.access_token);
-
 			const loginResult = await api('post', 'login', loginPayload);
 
 			console.log(loginResult);
 
-			if (loginResult.status === 200) {
+			if (loginResult.status === 201 || loginResult.status === 200) {
 				const data = await loginResult.json();
-				localStorage.setItem('eshopping_access_token', data['access_token']);
+				setAccessToken(data.access_token);
 			}
 
 			console.info(

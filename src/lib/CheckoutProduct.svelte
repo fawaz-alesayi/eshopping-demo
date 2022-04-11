@@ -1,31 +1,35 @@
-<script>
+<script lang="ts">
+	import { cartStore } from './cartStore';
+
 	export let product;
 </script>
 
 <div class="productContainer">
-	<img src={product.imageUrl} width={90} height={90} alt="A product" />
+	<img src={product.imageUrl} id="productImage" width={70} height={90} alt="A product" />
 	<div class="details">
 		<p>{product.name}</p>
-		<p class="price">{product.price}</p>
+		<p class="price">{product.price} SR</p>
 
 		<div class="actions">
 			<i
 				class="changeCount"
 				on:click={() => {
-                    if (product.count > 1) {
-                        product.count--;
-                    }
+					if (product.quantity > 1) {
+						product.quantity--;
+					}
 					product = product;
+					$cartStore = $cartStore;
 				}}
 			>
 				-
 			</i>
-			{product.count}
+			{product.quantity}
 			<i
 				class="changeCount"
 				on:click={() => {
-					product.count++;
+					product.quantity++;
 					product = product;
+					$cartStore = $cartStore;
 				}}
 			>
 				+
@@ -96,5 +100,8 @@
 		border: 1px solid #bababa;
 		box-sizing: border-box;
 		border-radius: 10px;
+	}
+
+	#productImage {
 	}
 </style>
