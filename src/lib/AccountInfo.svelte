@@ -1,13 +1,15 @@
 <script>
-	import { create, test, enforce, only, skipWhen, warn } from 'vest';
+	import { create, test, enforce, warn } from 'vest';
+	import SuitedInput from './SuitedInput.svelte';
 	export let incrementStep;
 	export let show = true;
 	let email, password, confirmPassword;
 	let suiteResult;
 
-	const suite = create((data = {}, currentField) => {
-		test('username', 'Email is required', () => {
+	const suite = create((data = {}) => {
+		test('email', 'Email is required', () => {
 			enforce(data.email).isNotBlank();
+			enforce(data.email).matches(/^[^@]+@[^@]+\.[^@]+$/);
 		});
 
 		test('password', 'Must be at least 8 charachers', () => {
@@ -19,7 +21,7 @@
 			enforce(data.password).matches(/[0-9]/);
 		});
 
-		test('confirm', 'Passwords do not match', () => {
+		test('confirmPassword', 'Passwords do not match', () => {
 			enforce(data.confirmPassword).equals(data.password);
 		});
 	});
@@ -38,26 +40,31 @@
 <div class:selected={!show}>
 	<fieldset class="form-group">
 		<label for="email">Email</label>
-		<input type="email" class="form-control" id="email" placeholder="Email" bind:value={email} />
+		<SuitedInput
+			name="email"
+			placeholder={'Email'}
+			type={'email'}
+			bind:value={email}
+			errors={suiteResult.getErrors('email')}
+		/>
 	</fieldset>
 	<fieldset class="form-group">
 		<label for="password">Password</label>
-		<input
-			type="password"
-			class="form-control"
-			id="password"
-			placeholder="Password"
+		<SuitedInput
+			name="password"
+			placeholder={'Password'}
+			type={'password'}
 			bind:value={password}
+			errors={suiteResult.getErrors('password')}
 		/>
 	</fieldset>
 	<fieldset class="form-group">
 		<label for="confirmPassword">Confirm Password</label>
-		<input
-			type="password"
-			class="form-control"
-			id="confirmPassword"
-			placeholder="Confirm Password"
+		<SuitedInput
+			placeholder={'Confirm Password'}
+			type={'password'}
 			bind:value={confirmPassword}
+			errors={suiteResult.getErrors('confirmPassword')}
 		/>
 	</fieldset>
 	<button class="btn" disabled={suiteResult.hasErrors()} on:click|preventDefault={incrementStep}
