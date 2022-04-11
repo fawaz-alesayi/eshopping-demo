@@ -62,7 +62,7 @@
 	$: {
 		const result = inputs;
 		suiteResult = suite(result);
-		console.log(suiteResult.getErrors());
+		// console.log(suiteResult.getErrors());
 	}
 </script>
 

@@ -4,12 +4,18 @@
 
 	export let decrementStep;
 	export let show = true;
+	let month;
+	let year;
+	let touchedYear = false;
 
 	export let inputs = {
 		creditCardNumber: '',
 		cvv: '',
 		expirationDate: ''
 	};
+	$: {
+		inputs.expirationDate = month + '/' + year;
+	}
 
 	let suiteResult;
 
@@ -37,12 +43,15 @@
 		test('expirationDate', 'Expiration Date Required', () => {
 			enforce(data.expirationDate).isNotBlank();
 		});
+
+		test('expirationDate', 'Expiration Date must be in the format MM/YY', () => {
+			enforce(data.expirationDate).matches(/^[0-9]{2}\/[0-9]{2}$/);
+		});
 	});
 
 	$: {
 		const result = inputs;
 		suiteResult = suite(result);
-		console.log(suiteResult.getErrors());
 	}
 </script>
 
@@ -51,6 +60,7 @@
 		<label for="creditCard">Credit Card Number</label>
 		<SuitedInput
 			type="text"
+			name="creditCardNumber"
 			bind:value={inputs.creditCardNumber}
 			placeholder="5860XXXX..."
 			errors={suiteResult.getErrors('creditCardNumber')}
@@ -59,18 +69,35 @@
 	<div class="grouped">
 		<fieldset class="form-group">
 			<label for="expiryDate">Expiry Date</label>
-			<SuitedInput
-				type="date"
-				name={'expiryDate'}
-				bind:value={inputs.expirationDate}
-				placeholder="Expiry Date"
-				errors={suiteResult.getErrors('expirationDate')}
-			/>
+			<div class="inline-group">
+				<SuitedInput
+					type="text"
+					name={"month"}
+					bind:value={month}
+					placeholder="MM"
+					maxLength={2}
+				/>
+				<SuitedInput
+					type="text"
+					name={"year"}
+					bind:value={year}
+					placeholder="YY"
+					maxLength={2}
+					bind:inputTouched={touchedYear}
+				/>
+			</div>
+			<p>Must be in MM/YY format</p>
+			<!-- {#if touchedYear && suiteResult.getErrors("expirationDate").length > 0}
+				<div class="text-error">
+					<strong>{suiteResult.getErrors()[0]}</strong>
+				</div>
+			{/if} -->
 		</fieldset>
 		<fieldset class="form-group">
 			<label for="cvv">CVV</label>
 			<SuitedInput
 				type="number"
+				name={'cvv'}
 				bind:value={inputs.cvv}
 				placeholder="CVV"
 				errors={suiteResult.getErrors('cvv')}
@@ -98,5 +125,12 @@
 
 		background: #0acf83;
 		color: white;
+	}
+
+	.inline-group {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		width: 150px;
 	}
 </style>

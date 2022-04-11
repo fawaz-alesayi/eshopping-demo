@@ -33,7 +33,7 @@
 			confirmPassword
 		};
 		suiteResult = suite(result);
-		console.log(suiteResult);
+		// console.log(suiteResult);
 	}
 </script>
 

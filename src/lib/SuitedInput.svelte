@@ -1,5 +1,5 @@
 <script lang="ts">
-	let inputTouched;
+	export let inputTouched = false;
 	export let errors = [];
 	export let value;
 	export let name = '';
@@ -19,9 +19,12 @@
 		| 'color'
 		| 'file'
 		| 'range' = 'text';
-	export let placeholder = type[0].toUpperCase() + type.slice(1);
+	export let placeholder;
 	export let minLength = 0;
-	export let maxLength = 10;
+
+	// default maxLength according to the HTML spec
+	const MAX_LENGTH = 524288;
+	export let maxLength = MAX_LENGTH;
 
 	function typeAction(node) {
 		node.type = type;
@@ -40,9 +43,7 @@
 	}}
 />
 {#if inputTouched && errors.length > 0}
-	{#each errors as error}
-		<div class="text-error">
-			<strong>{error}</strong>
-		</div>
-	{/each}
+	<div class="text-error">
+		<strong>{errors[0]}</strong>
+	</div>
 {/if}
