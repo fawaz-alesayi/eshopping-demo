@@ -10,11 +10,10 @@
 	<input type="text" class="form-control" id="firstName" placeholder="First Name" />
 </fieldset>
 <fieldset class="form-group">
-	<label for="password">Last Name</label>
-	<input type="password" class="form-control" id="password" placeholder="Password" />
+	<label for="lastName">Last Name</label>
+	<input type="text" class="form-control" id="lastName" placeholder="Last Name" />
 </fieldset>
 <fieldset>
-	<!--Country-->
 	<label for="country">Country</label>
 	<select class="form-control" id="country">
 		<option>Select Country</option>

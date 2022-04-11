@@ -20,7 +20,7 @@ export const post: RequestHandler = async ({ request }) => {
 			password: "12345678",
 			firstName: "Fawaz",
 			lastName: "Alesayi",
-			CreditCard: {
+			creditCard: {
 				create: [
 					{
 						number: "123456789",
@@ -28,7 +28,7 @@ export const post: RequestHandler = async ({ request }) => {
 						expiry: new Date(),
 					}
 				]
-			}
+			},
 		}
 	})
 
