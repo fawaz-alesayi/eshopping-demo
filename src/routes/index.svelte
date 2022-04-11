@@ -21,7 +21,7 @@
 	import type { Product } from '$lib/types';
 	import Header from '$lib/Header.svelte';
 	import getProducts from '$lib/getProducts';
-	import { accessToken } from '$lib/store';
+	import { accessTokenStore } from '$lib/store';
 	import { cartStore } from '$lib/cartStore';
 	import { onMount } from 'svelte';
 
@@ -32,12 +32,12 @@
 	onMount(() => {
 		console.log($cartStore);
 		if (products.length > 0) {
-			cartStore.set(([
+			cartStore.set([
 				{
 					...products[0],
-					quantity: 2,
+					quantity: 2
 				}
-			]));
+			]);
 		}
 	});
 
@@ -52,7 +52,7 @@
 </svelte:head>
 
 <Header title="Products" allowBack={false}>
-	{#if $accessToken}
+	{#if $accessTokenStore}
 		<a href="/cart">
 			<i>
 				<Icon icon="eva:shopping-cart-outline" height={24} width={24} />

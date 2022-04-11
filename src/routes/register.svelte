@@ -8,9 +8,10 @@
 	import AccountInfo from '$lib/AccountInfo.svelte';
 	import PaymentInfo from '$lib/PaymentInfo.svelte';
 	import PersonalInfo from '$lib/PersonalInfo.svelte';
-	import { accessToken } from '$lib/store';
+	import { accessTokenStore } from '$lib/store';
 	import Header from '$lib/Header.svelte';
 	import { api } from '$lib/api';
+	import { setAccessToken } from '$lib/auth';
 
 	const steps = ['accountInfo', 'personalInfo', 'paymentInfo'];
 	let currentStep = steps[0];
@@ -27,10 +28,6 @@
 		if (index > 0) {
 			currentStep = steps[index - 1];
 		}
-	};
-
-	const setAccessToken = (token: string) => {
-		accessToken.set(token);
 	};
 
 	const handleSubmit = async (e) => {
@@ -68,7 +65,11 @@
 
 			if (loginResult.status === 201 || loginResult.status === 200) {
 				const data = await loginResult.json();
-				setAccessToken(data.access_token);
+				setAccessToken(data.access_token, accessTokenStore);
+
+				if (window) {
+					window.location.href = '/';
+				}
 			}
 
 			console.info(
