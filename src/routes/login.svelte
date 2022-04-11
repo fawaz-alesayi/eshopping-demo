@@ -43,6 +43,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Login</title>
+</svelte:head>
+
 <div>
 	<fieldset class="form-group">
 		<label for="email">Email</label>

@@ -77,6 +77,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Register</title>
+</svelte:head>
+
 <Header title={'Registration'} />
 
 <form class="register" on:submit|preventDefault={handleSubmit} method="post">

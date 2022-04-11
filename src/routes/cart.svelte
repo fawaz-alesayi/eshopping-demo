@@ -22,6 +22,10 @@
 	</i>
 </Header>
 
+<svelte:head>
+	<title>Cart</title>
+</svelte:head>
+
 <div class="checkoutGrid">
 	{#each $cartStore as product}
 		<div class="product">
