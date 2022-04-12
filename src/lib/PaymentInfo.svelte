@@ -25,6 +25,10 @@
 			enforce(data.creditCardNumber).isNotBlank();
 		});
 
+		test("creditCard", "Credit Card number must contain at least 8 digits", () => {
+			enforce(data.creditCardNumber).longerThan(7);
+		})
+
 		test('creditCard', 'Credit Card Number must contain only numbers', () => {
 			enforce(data.creditCardNumber).matches(/^[0-9]+$/);
 		});
