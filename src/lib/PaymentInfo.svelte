@@ -21,15 +21,15 @@
 	let suiteResult;
 
 	const suite = create((data = {}) => {
-		test('creditCard', 'Credit Card Number Required', () => {
+		test('creditCardNumber', 'Credit Card Number Required', () => {
 			enforce(data.creditCardNumber).isNotBlank();
 		});
 
-		test("creditCard", "Credit Card number must contain at least 8 digits", () => {
+		test("creditCardNumber", "Credit Card number must contain at least 8 digits", () => {
 			enforce(data.creditCardNumber).longerThan(7);
 		})
 
-		test('creditCard', 'Credit Card Number must contain only numbers', () => {
+		test('creditCardNumber', 'Credit Card Number must contain only numbers', () => {
 			enforce(data.creditCardNumber).matches(/^[0-9]+$/);
 		});
 
