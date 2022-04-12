@@ -30,7 +30,7 @@
 	let searchTerm = '';
 
 	onMount(() => {
-		if (products.length > 0) {
+		if ($accessTokenStore && products.length > 0) {
 			cartStore.set([
 				{
 					...products[0],
@@ -51,7 +51,7 @@
 </svelte:head>
 
 <Header title="Products" allowBack={false}>
-	{#if $accessTokenStore != null}
+	{#if $accessTokenStore}
 		<a href="/cart">
 			<i>
 				<Icon icon="eva:shopping-cart-outline" height={24} width={24} />
