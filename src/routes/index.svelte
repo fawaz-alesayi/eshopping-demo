@@ -51,7 +51,7 @@
 </svelte:head>
 
 <Header title="Products" allowBack={false}>
-	{#if $accessTokenStore}
+	{#if $accessTokenStore && $accessTokenStore !== 'null'}
 		<a href="/cart">
 			<i>
 				<Icon icon="eva:shopping-cart-outline" height={24} width={24} />
